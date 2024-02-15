@@ -129,34 +129,67 @@ function play(){
 }
 
 
-document.addEventListener('keydown', handleKeyPress);
-document.addEventListener('touchstart', handleTouchStart);
-document.addEventListener('touchend', handleTouchEnd);
+// document.addEventListener('keydown', handleKeyPress);
+// document.addEventListener('touchstart', handleTouchStart);
+// document.addEventListener('touchend', handleTouchEnd);
 
-function handleKeyPress(e) {
-    if (e.key == 'Enter' && game_state != 'Play') {
-        // Your existing code for starting the game
-    } else if (e.key == 'ArrowUp' || e.key == ' ') {
-        // Your existing code for controlling the bird's jump
-    }
-}
+// function handleKeyPress(e) {
+//     if (e.key == 'Enter' && game_state != 'Play') {
+//         // Your existing code for starting the game
+//     } else if (e.key == 'ArrowUp' || e.key == ' ') {
+//         // Your existing code for controlling the bird's jump
+//     }
+// }
+
+// function handleTouchStart(e) {
+//     e.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+//     if (game_state != 'Play') {
+//         // Start the game if not already playing
+//         // Your existing code for starting the game
+//     } else {
+//         // Perform bird jump action
+//         img.src = 'images/Bird-2.png';
+//         bird_dy = -7.6; // Adjust this value as needed
+//     }
+// }
+
+// function handleTouchEnd(e) {
+//     e.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+//     if (game_state == 'Play') {
+//         // Reset bird image to default
+//         img.src = 'images/Bird.png';
+//     }
+// }
+
+
+
+// Remove the event listener for 'keydown' checking for the 'Enter' key press
+// Remove the following line:
+// document.addEventListener('keydown', (e) => {
+//     if(e.key == 'Enter' && game_state != 'Play'){
+//         // Existing code for starting the game
+//     }
+// });
+
+// Add touchstart event listener to start the game when the screen is tapped
+document.addEventListener('touchstart', handleTouchStart);
+// Add click event listener to start the game when the screen is clicked with a cursor
+document.addEventListener('click', handleTouchStart);
 
 function handleTouchStart(e) {
-    e.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+    e.preventDefault(); // Prevent default touch/click behavior
     if (game_state != 'Play') {
-        // Start the game if not already playing
-        // Your existing code for starting the game
-    } else {
-        // Perform bird jump action
-        img.src = 'images/Bird-2.png';
-        bird_dy = -7.6; // Adjust this value as needed
-    }
-}
-
-function handleTouchEnd(e) {
-    e.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-    if (game_state == 'Play') {
-        // Reset bird image to default
-        img.src = 'images/Bird.png';
+        // Start the game
+        document.querySelectorAll('.pipe_sprite').forEach((e) => {
+            e.remove();
+        });
+        img.style.display = 'block';
+        bird.style.top = '40vh';
+        game_state = 'Play';
+        message.innerHTML = '';
+        score_title.innerHTML = 'Score : ';
+        score_val.innerHTML = '0';
+        message.classList.remove('messageStyle');
+        play();
     }
 }
