@@ -99,21 +99,113 @@ function play(){
     let bird_dy = 0;
 const terminalVelocity = 2; // Define the maximum downward speed
 
+// function apply_gravity() {
+//     if (game_state !== 'Play') return;
+
+//     bird_dy = Math.min(bird_dy + grativy, terminalVelocity);
+
+//     // Update bird image when touch start is detected
+//     document.addEventListener('touchstart', (e) => {
+//         img.src = 'images/Bird-2.png';
+//         bird_dy = -7.6; // Set the upward velocity when the bird jumps
+//     });
+
+//     // Update bird image when touch end is detected
+//     document.addEventListener('touchend', (e) => {
+//         img.src = 'images/Bird.png';
+//     });
+
+//     // Check if the bird is touching the top or bottom of the screen
+//     if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
+//         // Game over condition
+//         game_state = 'End';
+//         message.style.left = '28vw';
+//         window.location.reload();
+//         message.classList.remove('messageStyle');
+//         return;
+//     }
+
+//     // Move the bird vertically based on its velocity
+//     bird.style.top = bird_props.top + bird_dy + 'px';
+//     bird_props = bird.getBoundingClientRect();
+
+//     // Call apply_gravity function recursively using requestAnimationFrame
+//     requestAnimationFrame(apply_gravity);
+// }
+
+// let bird_dy = 0;
+// const terminalVelocity = 2; // Define the maximum downward speed
+
+// function apply_gravity() {
+//     if (game_state !== 'Play') return;
+
+//     bird_dy = Math.min(bird_dy + grativy, terminalVelocity);
+
+//     // Update bird image and velocity when touch start is detected or arrow key is pressed
+//     const jumpAction = () => {
+//         img.src = 'images/Bird-2.png';
+//         bird_dy = -7.6; // Set the upward velocity when the bird jumps
+//     };
+//     document.addEventListener('touchstart', jumpAction);
+//     document.addEventListener('keydown', (e) => {
+//         if (e.key === 'ArrowUp' || e.key === ' ') {
+            
+//             jumpAction();
+//         }
+//     });
+
+//     // Update bird image when touch end is detected
+//     document.addEventListener('touchend', (e) => {
+//         img.src = 'images/Bird.png';
+//     });
+
+//     // Check if the bird is touching the top or bottom of the screen
+//     if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
+//         // Game over condition
+//         game_state = 'End';
+//         message.style.left = '28vw';
+//         window.location.reload();
+//         message.classList.remove('messageStyle');
+//         return;
+//     }
+
+//     // Move the bird vertically based on its velocity
+//     bird.style.top = bird_props.top + bird_dy + 'px';
+//     bird_props = bird.getBoundingClientRect();
+
+//     // Call apply_gravity function recursively using requestAnimationFrame
+//     requestAnimationFrame(apply_gravity);
+// }
+
+
+
 function apply_gravity() {
     if (game_state !== 'Play') return;
 
-    // Apply gravity
     bird_dy = Math.min(bird_dy + grativy, terminalVelocity);
 
-    // Update bird image when the 'ArrowUp' key or spacebar is pressed
+    // Function to handle jump action (change image and set upward velocity)
+    const jumpAction = () => {
+        img.src = 'images/Bird-2.png';
+        bird_dy = -7.6; // Set the upward velocity when the bird jumps
+    };
+
+    // Update bird image and velocity when touch start is detected
+    document.addEventListener('touchstart', jumpAction);
+
+    // Update bird image and velocity when arrow up key is pressed
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowUp' || e.key === ' ') {
-            img.src = 'images/Bird-2.png';
-            bird_dy = -7.6; // Set the upward velocity when the bird jumps
+            jumpAction();
         }
     });
 
-    // Update bird image when the 'ArrowUp' key or spacebar is released
+    // Reset bird image when touch end is detected
+    document.addEventListener('touchend', (e) => {
+        img.src = 'images/Bird.png';
+    });
+
+    // Reset bird image when arrow up key is released
     document.addEventListener('keyup', (e) => {
         if (e.key === 'ArrowUp' || e.key === ' ') {
             img.src = 'images/Bird.png';
@@ -204,13 +296,11 @@ function startGame() {
 
 // Function to handle touch start event
 function handleTouchStart(e) {
-    e.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
     startGame(); // Start the game when touched
 }
 
 // Function to handle touch end event
 function handleTouchEnd(e) {
-    e.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
     // No action needed for touch end
 }
 
@@ -219,45 +309,46 @@ document.addEventListener('touchstart', handleTouchStart);
 document.addEventListener('touchend', handleTouchEnd);
 
 // Apply gravity function (unchanged)
-function apply_gravity() {
-    if (game_state !== 'Play') return;
+// function apply_gravity() {
+//     if (game_state !== 'Play') return;
 
-    bird_dy = Math.min(bird_dy + grativy, terminalVelocity);
+//     bird_dy = Math.min(bird_dy + grativy, terminalVelocity);
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowUp' || e.key === ' ') {
-            img.src = 'images/Bird-2.png';
-            bird_dy = -7.6; // Set the upward velocity when the bird jumps
-        }
-    });
+//     document.addEventListener('keydown', (e) => {
+//         if (e.key === 'ArrowUp' || e.key === ' ') {
+//             img.src = 'images/Bird-2.png';
+//             bird_dy = -7.6; // Set the upward velocity when the bird jumps
+//         }
+//     });
 
-    document.addEventListener('keyup', (e) => {
-        if (e.key === 'ArrowUp' || e.key === ' ') {
-            img.src = 'images/Bird.png';
-        }
-    });
+//     document.addEventListener('keyup', (e) => {
+//         if (e.key === 'ArrowUp' || e.key === ' ') {
+//             img.src = 'images/Bird.png';
+//         }
+//     });
 
-    if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
-        game_state = 'End';
-        message.style.left = '28vw';
-        window.location.reload();
-        message.classList.remove('messageStyle');
-        return;
-    }
+//     if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
+//         game_state = 'End';
+//         message.style.left = '28vw';
+//         window.location.reload();
+//         message.classList.remove('messageStyle');
+//         return;
+//     }
 
-    bird.style.top = bird_props.top + bird_dy + 'px';
-    bird_props = bird.getBoundingClientRect();
+//     bird.style.top = bird_props.top + bird_dy + 'px';
+//     bird_props = bird.getBoundingClientRect();
 
-    requestAnimationFrame(apply_gravity);
-}
+//     requestAnimationFrame(apply_gravity);
+// }
 
 // Function to handle touch start event
-function handleTouchStart(e) {
-    e.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-    if (game_state !== 'Play') {
-        startGame(); // Start the game if not already playing
-    } else {
-        img.src = 'images/Bird-2.png'; // Change bird image
-        bird_dy = -7.6; // Set upward velocity when touched
-    }
-}
+// function handleTouchStart(e) {
+//     if (game_state !== 'Play') {
+//         startGame(); // Start the game if not already playing
+//     } else {
+//         img.src = 'images/Bird-2.png'; // Change bird image
+//         bird_dy = -7.6; // Set upward velocity when touched
+//     }
+// }
+
+
