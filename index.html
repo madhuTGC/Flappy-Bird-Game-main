@@ -13,33 +13,100 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="background"></div>
-    <img src="images/Bird.png" alt="bird-img" class="bird" id="bird-1">
-    <div class="message">
-        Enter To Start Game <p><span style="color: red;">&uarr;</span> ArrowUp to Control</p>
-    </div>
-    
-    <div class="score">
-        
-        <span class="score_title"></span>
-        <span class="score_val"></span>
+
+      <div id="popup" class="popup hide"  onclick="closePopup()">
+        <span class="close">&times;</span>
+        <img src="images/Instructions (2).png" alt="Popup Image">
+      </div>
+
+
+      <div id="newPopup" class="newPopup hide">
+        <img src="images/Game Over (1).png"  alt="New Popup Image">
+      </div>
+
+      <audio id="backgroundMusic" loop>
+        <source src="sounds effect/Sakura-Girl-Daisy-chosic.com_.mp3" type="audio/mp3" />
+      </audio>
+
+     
+
+
+    <!-- <div class="background"></div> -->
+
+    <div class=" background start-page" id="start-page">
+      <img src="images/Flippy Flamingo Logo.png" alt="FinnyFishLogo" id="finnyfishlogo">
+      <img id= "startButton" src="images/Start Button (3) (1).png" alt="play_btn">
     </div>
 
-    <div class="modal" tabindex="-1" role="dialog" id="questionModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Question</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resumeGame()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p id="questionText"></p>
-                    <button type="button" class="btn btn-primary" id="continueButton" onclick="resumeGame()">Continue</button>
-                </div>
-            </div>
+
+    <span><img src="images/Bird.png" alt="bird-img" class="bird" id="bird-1"></span>
+
+    <div class="message">
+        <!-- Enter To Start Game <p><span style="color: red;">&uarr;</span> ArrowUp to Control</p> -->
+
+    </div>
+    <div>
+        <div class="background">
+            <div class="bird"></div> <!-- This is where the bird image is displayed -->
+            <!-- Add the coin gifs here -->
+            <!-- <img src="images/Animation - 1707990369125 (1).gif" class="coin" style="display: none;"> -->
         </div>
+
+        <div class="coin"></div>
+        <div class="food"></div>
+
+
+
+        <div class="score">
+            <span class="score_title"></span>
+            <span class="score_val"></span>
+        </div>
+    </div>
+    
+
+    <div
+      class="modal"
+      tabindex="-1"
+      role="dialog"
+      id="questionModal"
+      style="overflow-y: auto; height: 100%; padding-left: 0px"
+      data-backdrop="static"
+    >
+      <div id="mcq"></div>
+
+      <div
+        class="modal-dialog modal-dialog-centered custom-modal-dialog"
+        role="document"
+        style="overflow-y: hidden"
+      >
+        <div class="modal-content">
+          <div class="modal-header" style="width: 100%">
+            <div class="timerContainer">
+
+                <img id="timer-icon" src="images/Bird.png" alt="Timer Icon" />
+                
+              <div id="timer"></div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div id="contentDiv"></div>
+
+            <p id="questionText"></p>
+          </div>
+
+          <div class="radio-container">
+
+          </div>
+          <div id="error-text"></div>
+          <div class="modal-footer">
+            <!-- <button type="button" id="continueButton" class="btn btn-secondary"><img src="images/Submit Button.png" alt="">
+            </button> -->
+
+              <img src="images/Submit Button (2) (1).png" id="continueButton" alt="Submit">
+
+          </div>
+        </div>
+      </div>
     </div>
     
 
