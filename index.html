@@ -19,6 +19,10 @@
         <img src="images/Instructions (2).png" alt="Popup Image">
       </div>
 
+      <div id="popup2" class="popup2 hide" onclick="closePopup2()">
+        <span class="close2">&times;</span>
+        <img src="images/new-instruction.png" alt="Popup Image">
+      </div>
 
       <div id="newPopup" class="newPopup hide">
         <img src="images/Game Over (1).png"  alt="New Popup Image">
@@ -29,8 +33,6 @@
       </audio>
 
      
-
-
     <!-- <div class="background"></div> -->
 
     <div class=" background start-page" id="start-page">
@@ -43,7 +45,6 @@
 
     <div class="message">
         <!-- Enter To Start Game <p><span style="color: red;">&uarr;</span> ArrowUp to Control</p> -->
-
     </div>
     <div>
         <div class="background">
@@ -54,15 +55,21 @@
 
         <div class="coin"></div>
         <div class="food"></div>
-
-
-
         <div class="score">
             <span class="score_title"></span>
             <span class="score_val"></span>
         </div>
+        <div id="score" class="score-box">
+          <span id="score1">0 coins</span>
+        </div>
+        <div id="timerContainer1">
+          <div id="customTimer"></div>
+        </div>
+        <div id="loader" class="loader-container">
+          <div class="loader"></div>
+      </div>
     </div>
-    
+  
 
     <div
       class="modal"
@@ -82,10 +89,15 @@
         <div class="modal-content">
           <div class="modal-header" style="width: 100%">
             <div class="timerContainer">
+                <!-- <img id="timer-icon" src="images/Timer (2).png" alt="Timer Icon" />
+              <div id="timer"></div> -->
+              <div id="timerContainerimg">
+                <div id="timer"></div>
+              </div>
+              <div id="logo">
+                <div id="logo-img"></div>
+              </div>
 
-                <img id="timer-icon" src="images/Bird.png" alt="Timer Icon" />
-                
-              <div id="timer"></div>
             </div>
           </div>
           <div class="modal-body">

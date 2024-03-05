@@ -17,7 +17,97 @@ const AssementData = [];
 let assessmentAnsResponse = [];
 var sum = 0;
 let assessmentTypeGame;
+const loader = document.getElementById("loader");
 let point = 0;
+const backgroundImg = document.querySelector(".background");
+
+// Get a reference to the "startButton" element
+var startButton = document.getElementById("startButton");
+
+// Add a click event listener to the "startButton" element
+
+
+if (url.href.includes("gameassid")){
+  assessmentTypeGame = true;
+  startButton.addEventListener("click", function() {
+    // Show the score box and timer container when the start button is clicked
+    document.getElementById("score").style.display = "none";
+    document.getElementById("timerContainer1").style.display = "none";
+    // showPopup();
+
+});
+
+  // document.getElementById("bonusLogo").style.display = "none";
+} 
+else{
+  showPopup2();
+  loader.style.display = "none";
+  startButton.addEventListener("click", function() {
+    // Show the score box and timer container when the start button is clicked
+    document.getElementById("score").style.display = "block";
+    document.getElementById("timerContainer1").style.display = "block";
+});
+
+  var timeLeft = 30;
+var timerInterval;
+
+// Function to start the timer
+function startTimer() {
+  // Clear any existing timer interval
+  clearInterval(timerInterval);
+
+  // Update timer display immediately
+  document.getElementById("customTimer").innerHTML = timeLeft;
+
+  // Start the timer
+  timerInterval = setInterval(function() {
+    // Decrease time left
+    timeLeft--;
+
+    // Update timer display
+    document.getElementById("customTimer").innerHTML = timeLeft;
+    if (timeLeft <= 0) {
+      // Clear timer interval
+      clearInterval(timerInterval);
+      onGameOver();
+    }
+  }, 1000);
+}
+
+// Function to stop the timer
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
+// Get a reference to the "startButton" element
+var startButton = document.getElementById("startButton");
+
+// Add a click event listener to the "startButton" element
+startButton.addEventListener("click", function() {
+  // Start the timer when the "startButton" is clicked
+  if (!assessmentTypeGame){
+    startTimer();
+  }  // Show score box
+  document.getElementById("score").style.display = "block";
+  // Show timer container
+  document.getElementById("timerContainer1").style.display = "block";
+});
+
+
+}
+
+
+
+
+function updateScoreDisplay() {
+  point += 10;
+  const scoreElement = document.getElementById("score1");
+  scoreElement.innerHTML = `${point} Coins`;
+}
+
+// Optional: Log timeLeft for debugging
+console.log("timeLeft initially:", timeLeft);
+
 
 async function getIdUser(
   url = `https://www.playtolearn.in/Mini_games/api/UserDetail?OrgId=${ParamOrgID}&Email=${paramUserID}`
@@ -30,9 +120,10 @@ async function getIdUser(
     console.log(encryptedData);
     UID.push(IdUser);
     console.log(UID[0].Id_User);
-
-    getDetails();
-
+    if (assessmentTypeGame) {
+      getDetails();
+      loader.style.display = "none";
+    }
     return encryptedData;
   } catch (error) {
     console.error("Fetch error:", error.message);
@@ -45,16 +136,9 @@ async function getDetails(
 ) {
   try {
     const response = await fetch(url, { method: "GET" });
-
     const encryptedData = await response.json();
     QuestionList = JSON.parse(encryptedData);
     console.log("ResponseData", QuestionList);
-
-    // Assuming the response is the encrypted data
-
-    // loader.style.display = "none";
-    // showPopup();
-
     return encryptedData;
   } catch (error) {
     console.error("Fetch error:", error.message);
@@ -65,6 +149,8 @@ async function getDetails(
 function initializePage() {
   try {
     getIdUser();
+    // loader.style.display = "none";
+
     console.log(UID[0].Id_User);
   } catch (error) {
     // console.error('Error during initialization:', error.message);
@@ -75,62 +161,188 @@ document.addEventListener("DOMContentLoaded", initializePage);
 let getResponse;
 
 // Function to save assessment data to the server
-// async function saveAssessment(data) {
-//   let postData = data;
+async function saveAssessment(data) {
+  let postData = data;
 
-//   const baseUrl = "https://www.playtolearn.in/";
-//   const endpoint = "Mini_games/api/assessmentdetailuserlog";
-//   const url = baseUrl + endpoint;
+  const baseUrl = "https://www.playtolearn.in/";
+  const endpoint = "Mini_games/api/assessmentdetailuserlog";
+  const url = baseUrl + endpoint;
 
-//   const response = await fetch(url, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       // Add any additional headers if required
-//     },
-//     body: JSON.stringify(postData),
-//   });
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // Add any additional headers if required
+    },
+    body: JSON.stringify(postData),
+  });
 
-//   // if (!response.ok) {
-//   // throw new Error(`Network response was not ok, status code: ${response.status}`);
-//   // }
-//   console.log("response", response);
-//   const responseData = await response.json();
+  // if (!response.ok) {
+  // throw new Error(`Network response was not ok, status code: ${response.status}`);
+  // }
+  console.log("response", response);
+  const responseData = await response.json();
 
-//   return responseData;
-// }
+  return responseData;
+}
 
 // Function to save assessment master log data to the server
-// async function saveAssessmentMasterLog(data) {
-//   let postData = data;
-//   //  console.log( JSON.stringify(postData));
+async function saveAssessmentMasterLog(data) {
+  let postData = data;
+  //  console.log( JSON.stringify(postData));
 
-//   const baseUrl = "https://www.playtolearn.in/";
-//   const endpoint = "Mini_games/api/gameusermasterlog";
-//   const url = baseUrl + endpoint;
+  const baseUrl = "https://www.playtolearn.in/";
+  const endpoint = "Mini_games/api/gameusermasterlog";
+  const url = baseUrl + endpoint;
 
-//   const response = await fetch(url, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       // Add any additional headers if required
-//     },
-//     body: JSON.stringify(postData),
-//   });
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // Add any additional headers if required
+    },
+    body: JSON.stringify(postData),
+  });
 
-//   // if (!response.ok) {
-//   // throw new Error(`Network response was not ok, status code: ${response.status}`);
+  // if (!response.ok) {
+  // throw new Error(`Network response was not ok, status code: ${response.status}`);
+  // }
+  // console.log('response',response);
+  const responseData = await response.json();
 
-//   // }
-//   // console.log('response',response);
-//   const responseData = await response.json();
+  return responseData;
+}
 
-//   return responseData;
-// }
+let rank = 0;
+let scores = 10;
+let assessmentObject = [];
+let GivenAns;
+function onGameOver() {
+  if (assessmentTypeGame) {
+    // Handle end of game logic, save assessment data, and show a popup  isGamePaused = true;
+    console.log("assesmentData", AssementData);
+    const mergedData = AssementData.map((game, index) => ({
+      ...game,
+      ...assessmentObject[index],
+    }));
+
+    console.log("merge", mergedData);
+    let assessmentData = [];
+    let assementDataForMasterLog = [];
+
+    var sum = 0;
+    console.log("sum", sum);
+
+    for (let i = 0; i < mergedData.length; i++) {
+      sum = mergedData[i].AchieveScore + sum;
+
+      console.log("s", sum);
+      // console.log("a",mergedData[i].AchieveScore )
+      console.log("inSum", sum);
+
+      // i=1;mergedData
+      let model = {
+        ID_ORGANIZATION: urlParams.get("OrgID"),
+        id_user: UID[0].Id_User,
+        Id_Assessment: mergedData[i].Id_Assessment,
+        Id_Game: mergedData[i].Id_Game,
+        attempt_no: mergedData[i].allow_attempt,
+        id_question: mergedData[i].Id_Assessment_question,
+        is_right: mergedData[i].isRightAns,
+        score: mergedData[i].AchieveScore,
+        Id_Assessment_question_ans: mergedData[i].id_question,
+        Time: mergedData[i].Timer,
+        M2ostAssessmentId: M2OstAssesmentID,
+      };
+      console.log("OutSum", sum);
+      let modelForGameMasterLog = {
+        ID_ORGANIZATION: ParamOrgID,
+        id_user: UID[0].Id_User,
+        Id_Room: mergedData[0].Id_Assessment,
+        Id_Game: mergedData[0].Id_Game,
+        attempt_no: mergedData[0].allow_attempt,
+        score: sum,
+      };
+
+      assessmentData.push(model);
+      assementDataForMasterLog.push(modelForGameMasterLog);
+    }
+    // console.log('AssesmentLog',assementDataForMasterLog);
+
+    saveAssessment(assessmentData);
+    saveAssessmentMasterLog(
+      assementDataForMasterLog[assementDataForMasterLog.length - 1]
+    );
+    showNewPopup();
+    pauseGame()
+
+    // document.getElementById("board").style.display = "none";
+  } else {
+    showNewPopup();
+    pauseGame()
+    // document.getElementById("board").style.display = "none";
+
+    // Prepare the data to send in the POST request
+    async function postData() {
+      const postGamePlayData = [
+        {
+            "ID_ORGANIZATION": ParamOrgID,
+            "id_user": UID[0].Id_User,
+            "Id_Assessment": null,
+            "Id_Game": id_game,
+            "attempt_no": null,
+            "id_question": null,
+            "is_right": null,
+            "score": point,
+            "Id_Assessment_question_ans": null,
+            "Time": 45,
+            "M2ostAssessmentId": null,
+            "status": "A"
+        }
+      ];
+    
+      try {
+        // Convert the data to JSON
+        const postData = JSON.stringify(postGamePlayData);
+    
+        // Make a POST request to the API endpoint
+        const response = await fetch(`https://www.playtolearn.in/Mini_games_beta/api/GamePlayDetailsUserLog`, {
+
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              // Add any additional headers if required
+          },
+          body: postData
+        });
+    
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+    
+        const data = await response.json();
+        console.log('Response:', data);
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    }
+    // Call the async function
+    postData();
+  }
+}
+
+
+
+
+
+
 function displayQuestion() {
-  if (!isGamePaused && currentQuestionIndex < QuestionList.length) {
-    pauseGame();
 
+  if (!isGamePaused && currentQuestionIndex < QuestionList.length) {
+    updateScoreDisplay()
+    console.log("point", point);
+
+    pauseGame();
     let currentQuestion = QuestionList[currentQuestionIndex];
     displayQuestionInModal(QuestionList[currentQuestionIndex]);
     // Your existing code to display questions
@@ -246,7 +458,6 @@ function displayQuestionInModal(questionObj) {
           // if (currentQuestionIndex === QuestionList.length) {
           //   onGameOver(); // Call onGameOver only after all questions have been answered
           //   document.getElementById("board").style.display ='none';
-
           // }
         } else {
           console.log("wrong answer");
@@ -272,11 +483,11 @@ function displayQuestionInModal(questionObj) {
 
         // console.log("assessmentAnsResponse",assessmentAnsResponse)
 
-        // assessmentObject.push(assessmentAnsResponse);
-        // console.log("first", assessmentObject);
+        assessmentObject.push(assessmentAnsResponse);
+        console.log("first", assessmentObject);
         if (currentQuestionIndex === QuestionList.length) {
           onGameOver(); // Call onGameOver only after all questions have been answered
-          document.getElementById("board").style.display = "none";
+          // document.getElementById("board").style.display = "none";
         }
       } else {
         const errorTextElement = $("#error-text");
@@ -293,21 +504,22 @@ function displayQuestionInModal(questionObj) {
         };
         // console.log("assessmentAnsResponse",assessmentAnsResponse)
 
-        // assessmentObject.push(assessmentAnsResponse);
+        assessmentObject.push(assessmentAnsResponse);
+
 
         // console.log("assessmentAnsResponse", assessmentAnsResponse);
       }
     });
 
-  let timer = 600; // Set the timer duration in seconds
+  let timer = 60; // Set the timer duration in seconds
   const timerElement = $("#timer");
-  timerElement.text(`${timer} sec`);
+  timerElement.text(`${timer}`);
 
   const timerInterval = setInterval(() => {
     timer--;
 
     if (timer >= 0) {
-      timerElement.text(`${timer} Sec`);
+      timerElement.text(`${timer}`);
     } else {
       clearInterval(timerInterval);
       // Time's up, handle it as needed
@@ -315,7 +527,7 @@ function displayQuestionInModal(questionObj) {
       onTimeUp();
       if (currentQuestionIndex === QuestionList.length) {
         onGameOver(); // Call onGameOver only after all questions have been answered
-        document.getElementById("board").style.display = "none";
+        // document.getElementById("board").style.display = "none";
       }
     }
   }, 1000);
@@ -340,15 +552,13 @@ function onTimeUp() {
   console.log("TimeUpData", AssementData);
   QuestionList[currentQuestionIndex];
   console.log("new_ques", QuestionList[currentQuestionIndex]);
-
   const assessmentAnsResponse = {
-    // isRightAns: GivenAns,
-    // AchieveScore: sum + 0,
-    // id_question: null,
+    isRightAns: GivenAns,
+    AchieveScore: sum + 0,
+    id_question: null,
   };
-
-  // assessmentObject.push(assessmentAnsResponse);
-  // console.log("first", assessmentObject);
+  assessmentObject.push(assessmentAnsResponse);
+  console.log("first", assessmentObject);
 
   // Handle the timeout logic here
 
@@ -427,12 +637,13 @@ function startGameOnClick() {
     img.style.display = "block";
     bird.style.top = "40vh";
     message.innerHTML = "";
-    score_title.innerHTML = "Score : ";
-    score_val.innerHTML = "0";
+    // score_title.innerHTML = "Score : ";
+    // score_val.innerHTML = "0";
     message.classList.remove("messageStyle");
     play();
   }
 }
+// background.style.display='none'
 
 function play() {
   requestAnimationFrame(move);
@@ -440,92 +651,7 @@ function play() {
   requestAnimationFrame(create_pipe);
 }
 
-// function move() {
-//   if (!isGamePaused) {
-//     let pipe_sprite = document.querySelectorAll('.pipe_sprite');
-//     pipe_sprite.forEach((element) => {
-//       let pipe_sprite_props = element.getBoundingClientRect();
-//       bird_props = bird.getBoundingClientRect();
-
-//       if (pipe_sprite_props.right <= 0) {
-//         element.remove();
-//       } else {
-//         if (
-//           pipe_sprite_props.right < bird_props.left &&
-//           pipe_sprite_props.right + move_speed >= bird_props.left &&
-//           element.increase_score == '1'
-//         ) {
-//           score_val.innerHTML = +score_val.innerHTML + 1;
-//           sound_point.play();
-//           displayQuestion();
-
-//           pauseGame();
-//           console.log("madhu")
-//         }
-//         element.style.left = pipe_sprite_props.left - move_speed + 'px';
-//       }
-//     });
-//   }
-//   if (!isGamePaused) {
-//     requestAnimationFrame(move);
-//   }
-// }
 const backgroundMusic = document.getElementById("backgroundMusic");
-
-// function move() {
-//   if (!isGamePaused) {
-//     let pipe_sprite = document.querySelectorAll(".pipe_sprite");
-//     pipe_sprite.forEach((element) => {
-//       let pipe_sprite_props = element.getBoundingClientRect();
-//       bird_props = bird.getBoundingClientRect();
-
-//       if (pipe_sprite_props.right <= 0) {
-//         element.remove();
-//       } else {
-//         if (
-//           pipe_sprite_props.right < bird_props.left &&
-//           pipe_sprite_props.right + move_speed >= bird_props.left &&
-//           element.increase_score == "1"
-//         ) {
-//           score_val.innerHTML = +score_val.innerHTML + 1;
-//           // displayQuestion();
-//           // pauseGame();
-//         }
-//         element.style.left = pipe_sprite_props.left - move_speed + "px";
-//       }
-//     });
-
-//     // Check if the bird overlaps with any coin
-//     let coins = document.querySelectorAll(".coin");
-//     coins.forEach((coin) => {
-//       let coinRect = coin.getBoundingClientRect();
-//       if (
-//         bird_props.left + 5 <= coinRect.right &&
-//         bird_props.right + 5 >= coinRect.left &&
-//         bird_props.top - 5 <= coinRect.bottom &&
-//         bird_props.bottom + 5 >= coinRect.top
-//       ) {
-//         console.log("bird", bird_props);
-//         console.log("coin", coinRect);
-//         sound_point.play();
-
-//         coin.remove(); // Remove the coin
-//         displayQuestion();
-//         // alert("madhu")
-//         pauseGame();
-//         point += 10;
-
-//         console.log("point", point);
-//         // score_val.innerHTML = +score_val.innerHTML + 10; // Increase score by 10 points
-//       }
-//     });
-//   }
-
-//   if (!isGamePaused) {
-//     requestAnimationFrame(move);
-//   }
-// }
-
 
 function move() {
   if (!isGamePaused) {
@@ -542,7 +668,7 @@ function move() {
           pipe_sprite_props.right + move_speed >= bird_props.left &&
           element.increase_score == "1"
         ) {
-          score_val.innerHTML = +score_val.innerHTML + 1;
+          // score_val.innerHTML = +score_val.innerHTML + 1;
           // displayQuestion();
           // pauseGame();
         }
@@ -565,15 +691,20 @@ function move() {
         sound_point.play();
 
         coin.remove(); // Remove the coin
-        displayQuestion();
+        if (assessmentTypeGame){
+          displayQuestion();
+        }
+        else{
+          updateScoreDisplay()
+        }
         // alert("madhu")
-        pauseGame();
-        point += 10;
+        // pauseGame();
+        // point += 10;
 
-        console.log("point", point);
         // score_val.innerHTML = +score_val.innerHTML + 10; // Increase score by 10 points
       }
     });
+    background.style.display='none';
 
     // Check if the bird overlaps with any food
     let foods = document.querySelectorAll(".food");
@@ -591,7 +722,8 @@ function move() {
 
         food.remove(); // Remove the food
         // alert("madhu")
-        point += 20;
+        point += 10;
+        updateScoreDisplay();
 
         console.log("point", point);
       }
@@ -602,11 +734,6 @@ function move() {
     requestAnimationFrame(move);
   }
 }
-
-
-
-
-
 
 
 function create_pipe() {
@@ -708,7 +835,7 @@ function createFood(pipe_posi, pipe_gap) {
 
 const jumpAction = () => {
   img.src = "images/Bird.png"; // Change bird image to indicate jump
-  bird_dy = -7.6; // Apply vertical velocity to make the bird jump
+  bird_dy = -10.2; // Apply vertical velocity to make the bird jump
 
   // After a short delay, revert the bird image back to original
   setTimeout(() => {
@@ -745,8 +872,6 @@ function apply_gravity() {
     requestAnimationFrame(apply_gravity);
   }
 }
-
-// Event listener for touchstart to start the game
 // Event listener for touchend (optional)
 document.addEventListener("touchend", () => {
   // Handle touchend event if needed
@@ -766,8 +891,8 @@ function startGame() {
     img.style.display = "block"; // Ensure bird image is displayed
     bird.style.top = "40vh"; // Set initial bird position
     message.innerHTML = "";
-    score_title.innerHTML = "Score : ";
-    score_val.innerHTML = "0";
+    // score_title.innerHTML = "Score : ";
+    // score_val.innerHTML = "0";
     message.classList.remove("messageStyle");
     play();
   }
@@ -787,17 +912,21 @@ document
 function hideBird() {
   img.style.display = "none";
 }
-
 // Call hideBird() initially to hide the bird image
 hideBird();
-
-const backgroundImg = document.querySelector(".background");
-
 function showPopup() {
   popup.classList.remove("hide");
   backgroundImg.style.filter = "blur(5px)";
   document.getElementById("startButton").style.display = "none";
 }
+
+function showPopup2() {
+  popup2.classList.remove("hide");
+  backgroundImg.style.filter = "blur(5px)";
+  document.getElementById("startButton").style.display = "none";
+}
+
+
 
 function closePopup() {
   const popup = document.getElementById("popup");
@@ -806,25 +935,30 @@ function closePopup() {
   document.getElementById("startButton").style.display = "block";
 }
 
+function closePopup2() {
+  const popup2 = document.getElementById("popup2");
+  popup2.classList.add("hide");
+  backgroundImg.style.filter = "none";
+  document.getElementById("startButton").style.display = "block";
+}
+
 function showNewPopup() {
   const newPopup = document.getElementById("newPopup");
   newPopup.classList.remove("hide");
-  startScreen.style.filter = "blur(5px)";
-}
+  document.getElementById("bird-1").style.display = "none";
 
+}
 function closeNewPopup() {
   const newPopup = document.getElementById("newPopup");
   newPopup.classList.add("hide");
-
-  // Unblur the start screen
-  const startScreen = document.querySelector(".startScreen");
-  startScreen.style.filter = "none";
 }
-
 window.onload = function () {
-  showPopup();
+  if(assessmentTypeGame){
+    showPopup();
+  }
 };
-
 document.addEventListener("DOMContentLoaded", function () {
-  showPopup();
+  if(assessmentTypeGame){
+    showPopup();
+  }
 });
