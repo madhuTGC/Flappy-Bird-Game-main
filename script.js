@@ -1,3 +1,7 @@
+let rank = 0;
+let scores = 10;
+let assessmentObject = [];
+let GivenAns;
 let QuestionList;
 let currentQuestionIndex = 0;
 let isGamePaused = false;
@@ -20,98 +24,55 @@ let assessmentTypeGame;
 const loader = document.getElementById("loader");
 let point = 0;
 const backgroundImg = document.querySelector(".background");
-
-// Get a reference to the "startButton" element
-var startButton = document.getElementById("startButton");
-
-// Add a click event listener to the "startButton" element
-
+let startButton = document.getElementById("startButton");
 
 if (url.href.includes("gameassid")){
   assessmentTypeGame = true;
   startButton.addEventListener("click", function() {
-    // Show the score box and timer container when the start button is clicked
     document.getElementById("score").style.display = "none";
     document.getElementById("timerContainer1").style.display = "none";
-    // showPopup();
-
 });
-
-  // document.getElementById("bonusLogo").style.display = "none";
 } 
 else{
   showPopup2();
   loader.style.display = "none";
   startButton.addEventListener("click", function() {
-    // Show the score box and timer container when the start button is clicked
     document.getElementById("score").style.display = "block";
     document.getElementById("timerContainer1").style.display = "block";
 });
-
-  var timeLeft = 30;
+var timeLeft = 30;
 var timerInterval;
-
-// Function to start the timer
 function startTimer() {
-  // Clear any existing timer interval
   clearInterval(timerInterval);
-
-  // Update timer display immediately
   document.getElementById("customTimer").innerHTML = timeLeft;
-
-  // Start the timer
   timerInterval = setInterval(function() {
-    // Decrease time left
     timeLeft--;
-
-    // Update timer display
     document.getElementById("customTimer").innerHTML = timeLeft;
     if (timeLeft <= 0) {
-      // Clear timer interval
       clearInterval(timerInterval);
       onGameOver();
     }
   }, 1000);
 }
-
 // Function to stop the timer
 function stopTimer() {
   clearInterval(timerInterval);
 }
-
-// Get a reference to the "startButton" element
-var startButton = document.getElementById("startButton");
-
-// Add a click event listener to the "startButton" element
 startButton.addEventListener("click", function() {
-  // Start the timer when the "startButton" is clicked
   if (!assessmentTypeGame){
     startTimer();
-  }  // Show score box
+  }
   document.getElementById("score").style.display = "block";
-  // Show timer container
   document.getElementById("timerContainer1").style.display = "block";
 });
-
-
 }
-
-
-
-
 function updateScoreDisplay() {
   point += 10;
   const scoreElement = document.getElementById("score1");
   scoreElement.innerHTML = `${point} Coins`;
 }
-
-// Optional: Log timeLeft for debugging
-console.log("timeLeft initially:", timeLeft);
-
-
 async function getIdUser(
   url = `https://www.playtolearn.in/Mini_games/api/UserDetail?OrgId=${ParamOrgID}&Email=${paramUserID}`
-  // Asynchronously fetch user ID data from the specified URL
 ) {
   try {
     const response = await fetch(url, { method: "GET" });
@@ -130,7 +91,6 @@ async function getIdUser(
     throw error;
   }
 }
-
 async function getDetails(
   url = `https://www.playtolearn.in/Mini_games/api/GetAssessmentDataList?OrgID=${ParamOrgID}&UID=${UID[0].Id_User}&M2ostAssessmentId=${M2OstAssesmentID}&idgame=${id_game}&gameassid=${gameAssesmentId}`
 ) {
@@ -145,29 +105,22 @@ async function getDetails(
     throw error;
   }
 }
-
 function initializePage() {
   try {
     getIdUser();
-    // loader.style.display = "none";
-
     console.log(UID[0].Id_User);
   } catch (error) {
     // console.error('Error during initialization:', error.message);
   }
 }
-
 document.addEventListener("DOMContentLoaded", initializePage);
 let getResponse;
-
 // Function to save assessment data to the server
 async function saveAssessment(data) {
   let postData = data;
-
   const baseUrl = "https://www.playtolearn.in/";
   const endpoint = "Mini_games/api/assessmentdetailuserlog";
   const url = baseUrl + endpoint;
-
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -176,13 +129,8 @@ async function saveAssessment(data) {
     },
     body: JSON.stringify(postData),
   });
-
-  // if (!response.ok) {
-  // throw new Error(`Network response was not ok, status code: ${response.status}`);
-  // }
   console.log("response", response);
   const responseData = await response.json();
-
   return responseData;
 }
 
@@ -190,11 +138,9 @@ async function saveAssessment(data) {
 async function saveAssessmentMasterLog(data) {
   let postData = data;
   //  console.log( JSON.stringify(postData));
-
   const baseUrl = "https://www.playtolearn.in/";
   const endpoint = "Mini_games/api/gameusermasterlog";
   const url = baseUrl + endpoint;
-
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -203,20 +149,9 @@ async function saveAssessmentMasterLog(data) {
     },
     body: JSON.stringify(postData),
   });
-
-  // if (!response.ok) {
-  // throw new Error(`Network response was not ok, status code: ${response.status}`);
-  // }
-  // console.log('response',response);
   const responseData = await response.json();
-
   return responseData;
 }
-
-let rank = 0;
-let scores = 10;
-let assessmentObject = [];
-let GivenAns;
 function onGameOver() {
   if (assessmentTypeGame) {
     // Handle end of game logic, save assessment data, and show a popup  isGamePaused = true;
@@ -225,22 +160,16 @@ function onGameOver() {
       ...game,
       ...assessmentObject[index],
     }));
-
     console.log("merge", mergedData);
     let assessmentData = [];
     let assementDataForMasterLog = [];
-
     var sum = 0;
     console.log("sum", sum);
-
     for (let i = 0; i < mergedData.length; i++) {
       sum = mergedData[i].AchieveScore + sum;
-
       console.log("s", sum);
       // console.log("a",mergedData[i].AchieveScore )
       console.log("inSum", sum);
-
-      // i=1;mergedData
       let model = {
         ID_ORGANIZATION: urlParams.get("OrgID"),
         id_user: UID[0].Id_User,
@@ -263,12 +192,10 @@ function onGameOver() {
         attempt_no: mergedData[0].allow_attempt,
         score: sum,
       };
-
       assessmentData.push(model);
       assementDataForMasterLog.push(modelForGameMasterLog);
     }
     // console.log('AssesmentLog',assementDataForMasterLog);
-
     saveAssessment(assessmentData);
     saveAssessmentMasterLog(
       assementDataForMasterLog[assementDataForMasterLog.length - 1]
@@ -304,7 +231,6 @@ function onGameOver() {
       try {
         // Convert the data to JSON
         const postData = JSON.stringify(postGamePlayData);
-    
         // Make a POST request to the API endpoint
         const response = await fetch(`https://www.playtolearn.in/Mini_games_beta/api/GamePlayDetailsUserLog`, {
 
@@ -315,11 +241,9 @@ function onGameOver() {
           },
           body: postData
         });
-    
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-    
         const data = await response.json();
         console.log('Response:', data);
       } catch (error) {
@@ -330,43 +254,29 @@ function onGameOver() {
     postData();
   }
 }
-
-
-
-
-
-
 function displayQuestion() {
-
   if (!isGamePaused && currentQuestionIndex < QuestionList.length) {
     updateScoreDisplay()
     console.log("point", point);
-
     pauseGame();
     let currentQuestion = QuestionList[currentQuestionIndex];
     displayQuestionInModal(QuestionList[currentQuestionIndex]);
     // Your existing code to display questions
-
     currentQuestionIndex++;
     // backgroundMusic.pause();
   }
 }
-
 function displayQuestionInModal(questionObj) {
   const question = questionObj.Assessment_Question;
   // console.log("question",question)
   // console.log("questionobj",questionObj)
-
   const content = questionObj.assessment_question_url;
-
   const options = questionObj.optionList;
   // console.log("option",options)
   var assessmentType = questionObj.Assessment_Type;
   var contentDiv = $("#contentDiv");
-
   // Clear existing content in contentDiv
   contentDiv.empty();
-
   // Depending on the assessment type, add the corresponding content
   if (assessmentType === 1) {
     // Add image
@@ -395,19 +305,12 @@ function displayQuestionInModal(questionObj) {
       height: "26vh",
     });
     contentDiv.append(videoElement);
-  } else {
-    // Handle other assessment types or provide a default behavior
-    // contentDiv.text('Unsupported assessment type');
-  }
-
+  } 
   // Display question number and text
   const questionNumber = currentQuestionIndex + 1;
-
   $("#questionText").html(`${question}`);
-
   // Clear existing options
   $(".radio-container").empty();
-
   // Iterate over options and create radio buttons
   options.forEach((option, index) => {
     const optionLabel = $("<label>").text(option.Answer_Description);
@@ -440,7 +343,6 @@ function displayQuestionInModal(questionObj) {
         // console.log(option);
         AssementData.push(questionObj);
         console.log("q", questionObj);
-
         // console.log(selectedOption);
         // console.log(QuestionList[currentQuestionIndex - 1].optionList[selectedOption-1]);
         if (
@@ -455,10 +357,6 @@ function displayQuestionInModal(questionObj) {
             ].Id_Assessment_question_ans;
           GivenAns = "1";
           scores = 10;
-          // if (currentQuestionIndex === QuestionList.length) {
-          //   onGameOver(); // Call onGameOver only after all questions have been answered
-          //   document.getElementById("board").style.display ='none';
-          // }
         } else {
           console.log("wrong answer");
           // Incorrect answer
@@ -468,45 +366,32 @@ function displayQuestionInModal(questionObj) {
             ].Id_Assessment_question_ans;
           GivenAns = "2";
           scores = 0;
-          // if (currentQuestionIndex === QuestionList.length) {
-          //   onGameOver(); // Call onGameOver only after all questions have been answered
-          //   document.getElementById("board").style.display ='none';
-
-          // }
+          
         }
-
         const assessmentAnsResponse = {
           isRightAns: GivenAns,
           AchieveScore: scores,
           id_question: id_question,
         };
-
         // console.log("assessmentAnsResponse",assessmentAnsResponse)
-
         assessmentObject.push(assessmentAnsResponse);
         console.log("first", assessmentObject);
         if (currentQuestionIndex === QuestionList.length) {
           onGameOver(); // Call onGameOver only after all questions have been answered
-          // document.getElementById("board").style.display = "none";
         }
       } else {
         const errorTextElement = $("#error-text");
         errorTextElement.text("Click any one option");
-
         const id_question =
           QuestionList[currentQuestionIndex - 1].optionList[0]
             .Id_Assessment_question_ans; // Assuming the first option represents skipping the question
-
         const assessmentAnsResponse = {
           isRightAns: "2",
           AchieveScore: sum + 0,
           id_question: null,
         };
         // console.log("assessmentAnsResponse",assessmentAnsResponse)
-
         assessmentObject.push(assessmentAnsResponse);
-
-
         // console.log("assessmentAnsResponse", assessmentAnsResponse);
       }
     });
@@ -514,24 +399,18 @@ function displayQuestionInModal(questionObj) {
   let timer = 60; // Set the timer duration in seconds
   const timerElement = $("#timer");
   timerElement.text(`${timer}`);
-
   const timerInterval = setInterval(() => {
     timer--;
-
     if (timer >= 0) {
       timerElement.text(`${timer}`);
     } else {
       clearInterval(timerInterval);
-      // Time's up, handle it as needed
-
       onTimeUp();
       if (currentQuestionIndex === QuestionList.length) {
         onGameOver(); // Call onGameOver only after all questions have been answered
-        // document.getElementById("board").style.display = "none";
       }
     }
   }, 1000);
-
   // Clear timer when modal is hidden
   $("#questionModal").on("hidden.bs.modal", function () {
     clearInterval(timerInterval);
@@ -540,10 +419,8 @@ function displayQuestionInModal(questionObj) {
   // Show the question modal
   $("#questionModal").modal("show");
 }
-
 function onTimeUp() {
-  isGamePaused = true; // Set player start to true to resume the game
-
+  isGamePaused = true;
   const id_question =
     QuestionList[currentQuestionIndex - 1].optionList[0]
       .Id_Assessment_question_ans;
@@ -560,28 +437,20 @@ function onTimeUp() {
   assessmentObject.push(assessmentAnsResponse);
   console.log("first", assessmentObject);
 
-  // Handle the timeout logic here
-
   // Automatically select an option (you can modify this based on your logic)
   $("input[name=group]").first().prop("checked", true);
-
   resumeGame();
-
-  // Hide the question modal
   $("#questionModal").modal("hide");
-  // document.getElementById("jet").style.display = "block";
 }
 
 function pauseGame() {
   isGamePaused = true;
   message.classList.add("pausedMessage");
 }
-
 function resumeGame() {
   isGamePaused = false;
   document.getElementById("bird-1").style.display = "block";
   $("#questionModal").modal("hide"); // Close the modal
-
   // Resume the animations and game logic here
   move();
   requestAnimationFrame(apply_gravity);
@@ -608,8 +477,6 @@ let bird = document.querySelector(".bird");
 let img = document.getElementById("bird-1");
 let sound_point = new Audio("sounds effect/point.mp3");
 let bonus_point = new Audio("sounds effect/bonus.mp3");
-
-
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
 let score_val = document.querySelector(".score_val");
@@ -621,7 +488,6 @@ img.style.display = "none";
 message.classList.add("messageStyle");
 
 document.addEventListener("DOMContentLoaded", function () {
-  const startButton = document.getElementById("startButton");
   startButton.addEventListener("click", startGameOnClick);
 });
 
@@ -637,22 +503,16 @@ function startGameOnClick() {
     img.style.display = "block";
     bird.style.top = "40vh";
     message.innerHTML = "";
-    // score_title.innerHTML = "Score : ";
-    // score_val.innerHTML = "0";
     message.classList.remove("messageStyle");
     play();
   }
 }
-// background.style.display='none'
-
 function play() {
   requestAnimationFrame(move);
   requestAnimationFrame(apply_gravity);
   requestAnimationFrame(create_pipe);
 }
-
 const backgroundMusic = document.getElementById("backgroundMusic");
-
 function move() {
   if (!isGamePaused) {
     let pipe_sprite = document.querySelectorAll(".pipe_sprite");
@@ -668,9 +528,7 @@ function move() {
           pipe_sprite_props.right + move_speed >= bird_props.left &&
           element.increase_score == "1"
         ) {
-          // score_val.innerHTML = +score_val.innerHTML + 1;
-          // displayQuestion();
-          // pauseGame();
+          
         }
         element.style.left = pipe_sprite_props.left - move_speed + "px";
       }
@@ -689,23 +547,15 @@ function move() {
         console.log("bird", bird_props);
         console.log("coin", coinRect);
         sound_point.play();
-
-        coin.remove(); // Remove the coin
+        coin.remove();
         if (assessmentTypeGame){
           displayQuestion();
         }
         else{
           updateScoreDisplay()
         }
-        // alert("madhu")
-        // pauseGame();
-        // point += 10;
-
-        // score_val.innerHTML = +score_val.innerHTML + 10; // Increase score by 10 points
       }
     });
-    background.style.display='none';
-
     // Check if the bird overlaps with any food
     let foods = document.querySelectorAll(".food");
     foods.forEach((food) => {
@@ -719,9 +569,7 @@ function move() {
         console.log("bird", bird_props);
         console.log("food", foodRect);
         bonus_point.play();
-
         food.remove(); // Remove the food
-        // alert("madhu")
         point += 10;
         updateScoreDisplay();
 
@@ -729,36 +577,27 @@ function move() {
       }
     });
   }
-
   if (!isGamePaused) {
     requestAnimationFrame(move);
   }
 }
-
-
 function create_pipe() {
   if (!isGamePaused) {
     if (pipe_seperation > 215) {
       pipe_seperation = 0;
-
       let pipe_posi = Math.floor(Math.random() * 43) + 8;
-
       // Create upper pipe
       let upper_pipe_sprite = document.createElement("div");
       upper_pipe_sprite.className = "pipe_sprite upper-pipe"; // Add class for upper pipe
       upper_pipe_sprite.style.top = pipe_posi - 70 + "vh"; // Adjust the position of the upper pipe
       upper_pipe_sprite.style.left = "100vw";
-
       document.body.appendChild(upper_pipe_sprite);
-
       // Create lower pipe
       let lower_pipe_sprite = document.createElement("div");
       lower_pipe_sprite.className = "pipe_sprite lower-pipe"; // Add class for lower pipe
       lower_pipe_sprite.style.top = pipe_posi + pipe_gap + "vh"; // Adjust the position of the lower pipe
       lower_pipe_sprite.style.left = "100vw";
-
       lower_pipe_sprite.increase_score = "1";
-
       // Create a coin between the pipes
       createCoin(pipe_posi, pipe_gap);
       // Create a food between the pipes
@@ -770,7 +609,6 @@ function create_pipe() {
     requestAnimationFrame(create_pipe);
   }
 }
-
 function createCoin(pipe_posi, pipe_gap) {
   console.log("coin");
   // Randomly generate the position of the coin between the pipes
@@ -779,15 +617,11 @@ function createCoin(pipe_posi, pipe_gap) {
   coin.src = "images/coin.gif"; // Path to your coin image file
   coin.className = "coin";
   coin.style.position = "fixed"; // Ensure the coin is positioned absolutely
-
   // Randomize the vertical position of the coin within the gap
   let randomVerticalOffset = Math.random() * pipe_gap * 0.5; // Adjust this multiplier as needed
   coin.style.top = coinPos - randomVerticalOffset + "vh";
-
   coin.style.left = "100vw"; // Initially position the coin outside the screen
-
   document.body.appendChild(coin);
-
   // Move the coin towards the left
   let moveCoinInterval = setInterval(() => {
     if (!isGamePaused) {
@@ -801,7 +635,6 @@ function createCoin(pipe_posi, pipe_gap) {
     }
   }, 16); // Adjust the interval as needed
 }
-
 function createFood(pipe_posi, pipe_gap) {
   console.log("food");
   // Randomly generate the position of the food between the pipes
@@ -814,11 +647,8 @@ function createFood(pipe_posi, pipe_gap) {
   // Randomize the vertical position of the food within the gap
   let randomVerticalOffset = Math.random() * pipe_gap * 2; // Adjust this multiplier as needed
   food.style.top = foodPos + randomVerticalOffset + "vh";
-
   food.style.left = "100vw"; // Initially position the food outside the screen
-
   document.body.appendChild(food);
-
   // Move the food towards the left
   let moveFoodInterval = setInterval(() => {
     if (!isGamePaused) {
@@ -832,7 +662,6 @@ function createFood(pipe_posi, pipe_gap) {
     }
   }, 16); // Adjust the interval as needed
 }
-
 const jumpAction = () => {
   img.src = "images/Bird.png"; // Change bird image to indicate jump
   bird_dy = -10.2; // Apply vertical velocity to make the bird jump
@@ -842,13 +671,11 @@ const jumpAction = () => {
     img.src = "images/Bird.png";
   }, 200); // Adjust the delay as needed
 };
-
 document.addEventListener("keydown", (e) => {
   if ((e.key === "ArrowUp" || e.key === " ") && game_state === "Play") {
     jumpAction(); // Trigger jump action when spacebar or up arrow key is pressed
   }
 });
-
 function apply_gravity() {
   if (!isGamePaused) {
     // Add a condition to check if the bird is already near the bottom
@@ -863,11 +690,9 @@ function apply_gravity() {
       // Apply gravity only if the bird is not near the bottom or top
       bird_dy = Math.min(bird_dy + gravity, terminalVelocity);
     }
-
     // Update the bird's vertical position
     bird.style.top = bird_props.top + bird_dy + "px";
     bird_props = bird.getBoundingClientRect();
-
     // Continue applying gravity
     requestAnimationFrame(apply_gravity);
   }
@@ -912,7 +737,6 @@ document
 function hideBird() {
   img.style.display = "none";
 }
-// Call hideBird() initially to hide the bird image
 hideBird();
 function showPopup() {
   popup.classList.remove("hide");
@@ -925,16 +749,12 @@ function showPopup2() {
   backgroundImg.style.filter = "blur(5px)";
   document.getElementById("startButton").style.display = "none";
 }
-
-
-
 function closePopup() {
   const popup = document.getElementById("popup");
   popup.classList.add("hide");
   backgroundImg.style.filter = "none";
   document.getElementById("startButton").style.display = "block";
 }
-
 function closePopup2() {
   const popup2 = document.getElementById("popup2");
   popup2.classList.add("hide");

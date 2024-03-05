@@ -8,15 +8,7 @@
 
 html, body {
 	overflow: hidden;
-	/* height: 100%; */
 }
-
-/* Add this CSS code to your stylesheet */
-body {
-	overflow: hidden;
-}
-
-
 #finnyfishlogo {
   height: 77.92vh ;
   width: 36vw;
@@ -26,15 +18,12 @@ body {
   transform: translate(-50%, -50%);
 }
 #startButton{
-  /* top: 15%; */
   height: 12vh;
   width: 22w;
-  /* bottom: 2%; */
   cursor: pointer;
   position: absolute;
   bottom: 8%;
 }
-
 
 .background {
   opacity: 0.9; 
@@ -46,14 +35,12 @@ body {
   align-items: end; 
   position: relative;
 	height: 100vh;
-	/* width: 100vw; */
 	background: url('images/background-img.png') no-repeat center center fixed;
-    
-		overflow: hidden;
-		width: 100%;
-		background-repeat: no-repeat;
-		background-position: 100% 100%;
-		background-size: cover;
+  overflow: hidden;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: cover;
 }
 .bird {
 	height: 23vh;
@@ -63,29 +50,20 @@ body {
 	left: 30vw;
 	z-index: 100;
 }
-
 .pipe_sprite {
   position: fixed;
   top: 40vh;
   left: 100vw;
   height: 70vh;
   width: 22vw;
-  background-size: 100% 100%; /* Adjust the background size property as needed */
-  /* border: 5px solid black; */
+  background-size: 100% 100%; 
 }
-
 .upper-pipe {
-  /* Add styles specific to upper pipe */
   background-image: url('images/tre_log\ 2.png');
 }
-
 .lower-pipe {
-  /* Add styles specific to lower pipe */
   background-image: url('images/tre_log\ 7.png');
 }
-
-
-
 .message {
 	position: absolute;
 	z-index: 10;
@@ -98,36 +76,14 @@ body {
 }
 .messageStyle{
 	padding: 30px;
-	/* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
 	border-radius: 5%;
 }
-/* .score {
-	position: fixed;
-	z-index: 10;
-	height: 10vh;
-	font-size: 10vh;
-	font-weight: 100;
-	color: white;
-	-webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: black;
-	top: 0;
-	left: 0;
-	margin: 10px;
-	font-family: Arial, Helvetica, sans-serif;
-}
-.score_val {
-	color: gold;
-	font-weight: bold;
-} */
 @media only screen and (max-width: 1080px) {
     .message{
 		font-size: 50px;
 		top: 50%;
 		white-space: nowrap;
 	}
-	/* .score{
-		font-size: 8vh;
-	} */
 	.bird{
 		width: 8rem;
 		height: 8rem;
@@ -136,26 +92,17 @@ body {
 		width: 74vw;
 	}
 }
-
 .coin {
   width: 4rem; 
   height: 4rem; 
-  /* background-image: url('images/coin.gif');  */
   background-size: cover;
-  /* filter: drop-shadow(0 0 20px #e4b716); */
-
 }
-
 .food {
   filter: drop-shadow(0 0 20px #e4b716);
-
   width: 5rem; 
   height: 6rem; 
-  /* background-image: url('images/food.png');  */
   background-size: cover;
 }
-/* zap css */
-
 #startPage {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -173,21 +120,6 @@ body {
   gap: 2rem;
   height: 100vh;
 }
-
-/* #startButton {
-  background-color: #358ad2;
-  color: #040404;
-  padding: 10px 20px;
-  font-size: 2.5rem;
-  cursor: pointer;
-  border: 5px solid white;
-  border-radius: 15px;
-}
-
-#startButton:hover {
-  background-color: #40b4cd;
-} */
-
 .popup ,.popup2{
   position: fixed;
   top: 50%;
@@ -200,18 +132,14 @@ body {
   padding: 20px;
   border-radius: 10px;
   text-align: center;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
 }
-
 .popup img,.popup2 img{
   max-width: 100%;
   max-height: 100%;
 }
-
 .hide {
   display: none;
 }
-
 .close,.close2 {
   position: absolute;
   top: 17px;
@@ -220,11 +148,9 @@ body {
   font-size: 60px;
   color: #000;
 }
-
 .close:hover,.close2:hover {
   color: #358ad2;
 }
-
 .newPopup {
   position: fixed;
   top: 50%;
@@ -233,23 +159,17 @@ body {
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   z-index: 2;
-  /* background-color: white; */
-  /* padding: -3px; */
-  /* border-radius: -5px; */
   text-align: center;
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-
 .newPopup img {
   max-width: 100%;
   max-height: 100%;
 }
-
 .hide {
   display: none;
 }
-
 * {
   margin: 0;
   padding: 0;
@@ -258,60 +178,41 @@ body {
 body {
   overflow: hidden;
 }
-
 .custom-modal-dialog {
   max-width: 800px;
   width: 100%;
-  /* margin: 10vh auto; */
 }
-
 .modal-content {
-  /* background-color: #aae4f3;  */
   background-color: white;
   border-radius: 50px;
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow */
-  background-size: cover; /* or 'contain' based on your preference */
-  /* border: 5px solid #FF3767; */
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-size: cover; 
 	border: 5px solid #FF3767;
-
-  /* border-radius: 10px; */
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
-  width: 96%; /* Set your desired width */
-  max-width: 800px; /* Set your desired maximum width */
-  /* margin: auto;  */
-  /* margin: 1rem; */
+  width: 96%; 
+  max-width: 800px;
 }
-
 .modal-header {
-  /* overflow: hidden; */
   border-radius: 50px;
   height: 9vh;
-  /* width: 34.3vw; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
   background-image: url('images/Timer_BG-removebg-preview\ 2.png');
-
       -ms-flex-pack: end;
           justify-content: end;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
-
 .modal-body {
   text-align: center;
 }
-
 #contentDiv {
   height: auto;
-  /* max-height: 25vh; */
-  /* margin: 2%; */
   margin: 0% 0% 1% 0%;
 }
-
 @-webkit-keyframes fadeInLeft {
   from {
     opacity: 0;
@@ -337,7 +238,6 @@ body {
             transform: translateX(0);
   }
 }
-
 @-webkit-keyframes bounce {
   0%,
   20%,
@@ -356,7 +256,6 @@ body {
             transform: translateY(-5px);
   }
 }
-
 @keyframes bounce {
   0%,
   20%,
@@ -375,7 +274,6 @@ body {
             transform: translateY(-5px);
   }
 }
-
 .radio-container label {
   margin-bottom: 5px;
   border-radius: 15px;
@@ -412,13 +310,10 @@ body {
   background-color: #c6b6df;
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  /* transform: scale(1.1);  */
 }
-
 input {
   margin-right: 2%;
 }
-
 #continueButton {
   height: 8.5vh;
   width: 10vw;
@@ -434,8 +329,6 @@ input {
       -ms-flex-align: center;
           align-items: center;
 }
-
-
 #error-text {
   color: #c30202;
   font-size: 1.5rem;
@@ -465,7 +358,6 @@ input {
   padding: 0.5rem;
   background-color: #A7ECFD;
 }
-
 #error-text {
   color: #f01111;
   font-size: 1.5rem;
@@ -473,31 +365,6 @@ input {
   font-weight: 500;
   text-align: center;
 }
-
-/* .timerContainer {
-  color: #0c0b0b;
-  font-size: 1.3em;
-  background-color: white;
-  border: 3px solid #FF3767;
-  position: relative;
-  -webkit-box-shadow: 0 0 10px rgba(41, 38, 38, 0.2);
-          box-shadow: 0 0 10px rgba(41, 38, 38, 0.2);
-  border-radius: 30px;
-  width: 17%;
-  height: 5vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: end;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding-right: 10px;
-  
-} */
-
 #timerContainerimg {
   position: absolute;
   top: 0.5rem;
@@ -505,20 +372,17 @@ input {
   font-family: 'Press Start 2P', cursive; 
   padding: 0.5rem;
   padding-left: 3.2rem;
-  /* border: 0.3rem solid #6514dd; */
   border-radius: 1rem;
   font-weight: 500;
   z-index: 1;
   color: #000;
   text-align: right;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  */
   background-image: url(images/Timer\ \(2\).png);
   background-position: center center;
   background-size: 100% 100%;
   height: 8vh;
   width: 4vw;
 }
-
 #timer {
   position: absolute;
   top: 42%;
@@ -526,7 +390,6 @@ input {
   font-size: 1rem;
   color: #000;
 }
-
 #logo{
   position: absolute;
   top: 0.5rem;
@@ -537,12 +400,9 @@ input {
   height: 8vh;
   width: 6.5vw;
 }
-
-
 .modal-body {
   text-align: center;
 }
-
 .modal-footer {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -555,7 +415,6 @@ input {
           align-items: center;
   height: 11vh;
 }
-
 #timer-icon {
   width: 5vh;
   height: 4vh;
@@ -563,16 +422,12 @@ input {
   left: 0%;
   z-index: 1;
 }
-
 .logo-img {
   height: 50vh;
   width: 22vw;
 }
-
 #score{
-  display: none; /* Initially hide the score box and timer container */
-
-
+  display: none;
 }
 .score-box{
   position: absolute;
@@ -584,7 +439,6 @@ input {
   font-weight: 500;
   z-index: 1;
   color: #000;
-  /* text-align: center; */
   background-image: url(images/Score\ Board\ 1.png);
   background-position: center center;
   background-size: 100% 100%;
@@ -597,11 +451,10 @@ input {
 }
 .score-box span {
   position: relative;
-  top: 4.9rem; /* Adjust this value to move the content down */
+  top: 4.9rem; 
   right: 1.2rem;
   font-weight: bold;
 }
-
 #timerContainer1 {
   display: none; 
   position: absolute;
@@ -609,21 +462,17 @@ input {
   left: 0.7rem;
   padding: 0.5rem;
   padding-left: 3.2rem;
-  /* border: 0.3rem solid #6514dd; */
   border-radius: 1rem;
   font-weight: 500;
   z-index: 1;
   color: #000;
   text-align: right;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  */
   background-image: url(images/Timer\ \(2\).png);
   background-position: center center;
   background-size: 100% 100%;
   height: 10vh;
   width: 5vw;
 }
-
-/* Styles for custom timer */
 #customTimer {
   position: absolute;
   top: 44%;
@@ -632,7 +481,6 @@ input {
   color: #000;
   font-weight: bold;
 }
-
 .loader {
   border: 6px solid #f3f3f3;
   border-top: 6px solid #3498db;
@@ -641,7 +489,6 @@ input {
   height: 50px;
   animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
 0% {
   transform: rotate(0deg);
@@ -650,58 +497,42 @@ input {
   transform: rotate(360deg);
 }
 }
-
-
-
 @media (max-width: 768px) {
   .popup,.popup2 {
     padding: 15px;
     border-radius: 8px;
     width: 94%;
   }
-
   .close,.close2 {
     top: 14px;
     right: 24px;
     font-size: 38px;
   }
-
   .newPopup {
     padding: 0px;
     border-radius: 8px;
     width: 90%;
   }
 }
-
-
-
 @media (max-width: 480px) {
-
   .modal-content {
     border-radius: 30px;
     border: 3px solid #FF3767;}
-
   .coin {
     width: 3rem; 
     height: 3rem;
-  
   }
-  
   .food {
     width: 4rem; 
     height: 5rem; 
   }
-
   #finnyfishlogo {
     height: 64vh ;
     width: 98vw;
   }
-
   #startButton{
     height: 11vh;
   }
-
-  
   .logo-img {
     height: 35vh;
     width: 50vw;
@@ -713,9 +544,6 @@ input {
     width: 90vw;
     height: 40vh;
   }
-
-
-  
   #continueButton {
     height: 7.5vh;
     width: 28vw;
@@ -736,7 +564,6 @@ input {
   .radio-container {
     padding: 0% 4%;
   }
-
   #questionText {
     font-weight: 600;
     /* color: #c4bfbf; */
@@ -744,11 +571,9 @@ input {
     margin: 0%;
     font-size: 1em;
     text-align: left;
-    /* background-color: #006bfa; */
     border-radius: 13px;
     padding: 0.5rem;
   }
-
   .modal-footer {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -758,11 +583,7 @@ input {
             justify-content: center;
     -webkit-box-align: center;
         -ms-flex-align: center;
-            align-items: center;
-    /* height: 20vh; */
-    /* padding-bottom: 3rem; */
   }
-
   #error-text {
     color: #f01111;
     font-size: 1.5rem;
@@ -770,10 +591,6 @@ input {
     font-weight: 500;
     text-align: center;
   }
-
-
-
-
   #timerContainerimg{
     width: 18%;
   }
@@ -782,12 +599,10 @@ input {
     font-size: 0.8rem;
     left: 41%;
   }
-
   #logo{
     height: 8vh;
     width: 20vw;
   }
-
   #error-text {
     color: #f01111;
     font-size: 1.5rem;
@@ -795,8 +610,6 @@ input {
     font-weight: 500;
     text-align: center;
   }
-
-
   .radio-container label::before {
     background: rgba(255, 255, 255, 0.2);
   }
@@ -836,7 +649,6 @@ input[type="radio"] {
   accent-color: #FF3767;
   cursor: pointer;
 }
-
 .loader-container {
   position: fixed;
   top: 0;
@@ -854,7 +666,6 @@ input[type="radio"] {
       -ms-flex-align: center;
           align-items: center;
 }
-
 .loader {
   border: 6px solid #f3f3f3;
   border-top: 6px solid #3498db;
@@ -872,8 +683,6 @@ input[type="radio"] {
     transform: rotate(360deg);
   }
 }
-
-
 @media only screen and (max-width: 600px) {
   #timerContainer1 {
     width: 18%;
